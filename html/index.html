@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="invite" style="display: none;">
+        <h1 id="event-name"></h1>
+        <p id="player-count"></p>
+        <button onclick="accept()">Accept</button>
+        <button onclick="reject()">Reject</button>
+    </div>
+    <script>
+        window.addEventListener("message", function(event) {
+            let data = event.data;
+            if (data.action === "show") {
+                document.getElementById("invite").style.display = "block";
+                document.getElementById("event-name").innerText = data.name;
+                document.getElementById("player-count").innerText = data.showMax ? `${data.joined}/${data.maxPlayers} Players` : `${data.joined} Players`;
+            } else if (data.action === "hide") {
+                document.getElementById("invite").style.display = "none";
+            } else if (data.action === "updateCount") {
+                document.getElementById("player-count").innerText = data.maxPlayers > 0 ? `${data.joined}/${data.maxPlayers} Players` : `${data.joined} Players`;
+            }
+        });
+
+        function accept() {
+            fetch(`https://${GetParentResourceName()}/accept`, { method: 'POST' }).then(() => {
+             
+                document.getElementById("invite").style.display = "none";
+                
+                fetch(`https://${GetParentResourceName()}/setfocus`, {
+                    method: 'POST',
+                    body: JSON.stringify({ focus: false }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+            });
+        }
+
+        function reject() {
+            fetch(`https://${GetParentResourceName()}/reject`, { method: 'POST' }).then(() => {
+                document.getElementById("invite").style.display = "none";
+                fetch(`https://${GetParentResourceName()}/setfocus`, {
+                    method: 'POST',
+                    body: JSON.stringify({ focus: false }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+            });
+        }
+    </script>
+</body>
+</html>
