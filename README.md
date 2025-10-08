@@ -6,6 +6,9 @@
 - Uploading soon!!
 ## Discord
 - https://discord.gg/aKerfEQFAt
+## Usage
+- use /createvote to create a vote
+- use /createevent (max players) (event name) to create a simple event so when player press on join they get teleported to the cordinates where teh event vas created
 ## Features
 - Admin perm system
 - Immediat feedback
