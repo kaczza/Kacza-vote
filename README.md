@@ -1,4 +1,4 @@
-# kacza-vote
+# kacza-eventsystem
 - Free and simple
 - For all kinds of servers
 - Only for ESX
